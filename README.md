@@ -1,8 +1,11 @@
 # three_viewr 主要用three模型查看，保存当前状态
   <a href="#">
-    <img src="/three_view.png" height="100">
+    <img src="https://github.com/actinm/Three_View/blob/main/public/three_view.png" height="100">
   </a>
   <h1><a href="#">three_viewr</a></h1>
+
+  <h1><a target="_blank"  href="https://three-view.vercel.app/#/home">domo</a></h1>
+
 
 ## 功能概述
 
