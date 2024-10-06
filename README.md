@@ -1,6 +1,6 @@
 # three_viewr 主要用three模型查看，保存当前状态
   <a href="#">
-    <img src="#" height="100">
+    <img src="/three_view.png" height="100">
   </a>
   <h1><a href="#">three_viewr</a></h1>
 
