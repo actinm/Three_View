@@ -14,7 +14,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 //fileURL =Your model src
 function VIewFn(wrapDom, fileURL) {
-    let state = {"autoRotate":false,"background":false,"wireframe":false,"skeleton":false,"grid":true,"screenSpacePanning":true,"pointSize":1,"bgColor":"#191919","environment":"Neutral","toneMapping":1,"playbackSpeed":1,"actionStates":{},"camera":"[default]","punctualLights":true,"exposure":0,"ambientIntensity":0.3,"ambientColor":"#FFFFFF","directIntensity":2.5132741228718345,"directColor":"#FFFFFF"}
+    let state = {"autoRotate":false,"background":false,"wireframe":false,"skeleton":false,"grid":false,"screenSpacePanning":true,"pointSize":1,"bgColor":"#191919","environment":"Neutral","toneMapping":1,"playbackSpeed":1,"actionStates":{},"camera":"[default]","punctualLights":true,"exposure":0,"ambientIntensity":0.3,"ambientColor":"#FFFFFF","directIntensity":2.5132741228718345,"directColor":"#FFFFFF"}
 
     const environments = [
 {
@@ -41,7 +41,7 @@ function VIewFn(wrapDom, fileURL) {
 },
 ];
 
-let cameraPosition=[-1.1,0.81,-7.22]
+let cameraPosition=[5,2,5]
     let modelRef = {
         current: null
     };
@@ -145,6 +145,7 @@ let cameraPosition=[-1.1,0.81,-7.22]
             fileURL,
             (gltf) => {
                 const carModel = gltf.scene;
+
                 scene.add(carModel);
                 modelRef.current = carModel;
                 // printGraph(carModel);

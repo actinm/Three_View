@@ -405,22 +405,6 @@ function Index() {
         (gltf) => {
           const carModel = gltf.scene;
 
-          // 创建包围盒来计算模型的尺寸
-          const box1 = new THREE.Box3().setFromObject(carModel);
-          const size1 = new THREE.Vector3();
-          box1.getSize(size1); // 获取模型的宽、高、深
-          const center1 = new THREE.Vector3();
-          box1.getCenter(center1); // 获取模型的中心点
-          // 判断模型的原点位置
-          if (Math.abs(center1.y - size1.y / 2) < 0.001) {
-            console.log("模型的原点在底部");
-            // 模型已经在底部，不需要调整
-          } else {
-            console.log("模型的原点在中心");
-            // 将模型移动到底部对齐(0,0,0)
-            carModel.position.y -= center1.y - size1.y / 2;
-          }
-
           scene.add(carModel);
           modelRef.current = carModel;
           // printGraph(carModel);
@@ -898,21 +882,6 @@ let cameraPosition=[${cameraPosition}]
               fileURL,
               (gltf) => {
                   const carModel = gltf.scene;
-                        // 创建包围盒来计算模型的尺寸
-                  const box1 = new THREE.Box3().setFromObject(carModel);
-                  const size1 = new THREE.Vector3();
-                  box1.getSize(size1);  // 获取模型的宽、高、深
-                  const center1 = new THREE.Vector3();
-                  box1.getCenter(center1);  // 获取模型的中心点
-                  // 判断模型的原点位置
-                  if (Math.abs(center1.y - size1.y / 2) < 0.001) {
-                  //console.log("模型的原点在底部");
-                  // 模型已经在底部，不需要调整
-                  } else {
-                  console.log("模型的原点在中心");
-                  // 将模型移动到底部对齐(0,0,0)
-                 carModel.position.y -= center1.y - size1.y / 2;
-                  }
 
                   scene.add(carModel);
                   modelRef.current = carModel;
