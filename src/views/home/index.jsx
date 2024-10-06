@@ -459,10 +459,6 @@ function Index() {
 
       controlsRef.current.reset();
 
-      object.position.x -= center.x;
-      object.position.y -= center.y;
-      object.position.z -= center.z;
-
       controlsRef.current.maxDistance = size * 10;
     }
 
@@ -1073,9 +1069,6 @@ let cameraPosition=[${cameraPosition}]
 
       controlsRef.current.reset();
 
-      object.position.x -= center.x;
-      object.position.y -= center.y;
-      object.position.z -= center.z;
 
       controlsRef.current.maxDistance = size * 10;
     }
