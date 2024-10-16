@@ -120,6 +120,8 @@ function Index() {
     setIsShow(false);
   };
 
+  
+
   const load = useCallback((fileList) => {
     let rootFile;
     let rootPath = "";
@@ -193,9 +195,6 @@ function Index() {
       dispFolder
         .add(state, "wireframe")
         .onChange((value) => updateState("wireframe", value));
-      dispFolder
-        .add(state, "skeleton")
-        .onChange((value) => updateState("skeleton", value));
       dispFolder
         .add(state, "grid")
         .onChange((value) => updateState("grid", value));
@@ -272,8 +271,6 @@ function Index() {
 
     updateMaterials(modelRef.current, state);
 
-    // 骨架更新
-    updateSkeletonHelpers(scene, modelRef.current, state.skeleton);
 
     // 场地
     // 场地
@@ -314,7 +311,7 @@ function Index() {
     const height = wrapDom.clientHeight;
 
     // 相机
-    const camera = new THREE.PerspectiveCamera(70, width / height, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
     camera.position.set(
       cameraPosition[0],
       cameraPosition[1],
@@ -414,8 +411,6 @@ function Index() {
           // 初始更新材质
           updateMaterials(carModel, state);
 
-          // 骨架更新
-          updateSkeletonHelpers(scene, modelRef.current, state.skeleton);
 
           //网格
           const size = 50;
@@ -459,7 +454,22 @@ function Index() {
 
       controlsRef.current.reset();
 
-      controlsRef.current.maxDistance = size * 10;
+      controlsRef.current.maxDistance = size * 20;
+
+      
+
+      // object.position.x -= center.x;
+      // object.position.y -= center.y;
+      // object.position.z -= center.z;
+      // camera.near = size / 100;
+      // camera.far = size * 100;
+      // camera.updateProjectionMatrix();
+
+      // camera.position.copy(center);
+			// camera.position.x += size / 2.0;
+			// camera.position.y += size / 5.0;
+			// camera.position.z += size / 2.0;
+			// camera.lookAt(center);
     }
 
     // 返回一个销毁函数
@@ -554,27 +564,6 @@ function Index() {
       material.needsUpdate = true;
     });
   }
-  // 新增函数用于更新骨架辅助对象
-  function updateSkeletonHelpers(scene, model, showSkeleton) {
-    // 移除现有的骨架辅助对象
-    skeletonHelpersRef.current.forEach((helper) => {
-      scene.remove(helper);
-    });
-    skeletonHelpersRef.current = [];
-
-    if (showSkeleton && model) {
-      model.traverse((node) => {
-        if (node.type === "SkinnedMesh") {
-          const helper = new THREE.SkeletonHelper(
-            node.skeleton.bones[0].parent
-          );
-          helper.material.linewidth = 3;
-          scene.add(helper);
-          skeletonHelpersRef.current.push(helper);
-        }
-      });
-    }
-  }
   //是否展示grid
   function updateGridHelper(skeleton) {
     if (skeleton) {
@@ -596,6 +585,7 @@ function Index() {
       }
     }
   }
+  
   function handelView() {
     if (destroyFunction) {
       destroyFunction();
@@ -628,7 +618,12 @@ function Index() {
       directIntensity: 0.8 * Math.PI,
       directColor: "#FFFFFF",
     });
+    setTimeout(() => {
+      // 刷新页面的操作
+      window.location.reload();
+    }, 0);
     setisViewer(false);
+
   }
 
   async function updateEnvironment(name) {
@@ -820,7 +815,7 @@ let cameraPosition=[${cameraPosition}]
       const height = wrapDom.clientHeight;
   
       // 相机
-      const camera = new THREE.PerspectiveCamera(70, width / height, 0.1, 1000);
+      const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
       camera.position.set(cameraPosition[0], cameraPosition[1],cameraPosition[2]);
 
       // 渲染器
@@ -888,8 +883,6 @@ let cameraPosition=[${cameraPosition}]
                   // 初始更新材质
                   updateMaterials(carModel, state);
   
-                  // 骨架更新
-                  updateSkeletonHelpers(scene, modelRef.current, state.skeleton);
   
   
                  //网格
@@ -939,25 +932,6 @@ let cameraPosition=[${cameraPosition}]
     }
   }
   
-      // 新增函数用于更新骨架辅助对象
-      function updateSkeletonHelpers(scene, model, showSkeleton) {
-          // 移除现有的骨架辅助对象
-          skeletonHelpersRef.current.forEach(helper => {
-              scene.remove(helper);
-          });
-          skeletonHelpersRef.current = [];
-  
-          if (showSkeleton && model) {
-              model.traverse((node) => {
-                  if (node.type === 'SkinnedMesh') {
-                      const helper = new THREE.SkeletonHelper(node.skeleton.bones[0].parent);
-                      helper.material.linewidth = 3;
-                      scene.add(helper);
-                      skeletonHelpersRef.current.push(helper);
-                  }
-              });
-          }
-      }
   
       //背景
   function updateBackground(bgColor) {
@@ -1070,7 +1044,15 @@ let cameraPosition=[${cameraPosition}]
       controlsRef.current.reset();
 
 
-      controlsRef.current.maxDistance = size * 10;
+      controlsRef.current.maxDistance = size * 20;
+
+
+    // object.position.x -= center.x;
+    // object.position.y -= center.y;
+    // object.position.z -= center.z;
+    // camera.near = size / 100;
+    // camera.far = size * 100;
+    // camera.updateProjectionMatrix();
     }
 
           // 返回一个销毁函数
@@ -1174,11 +1156,12 @@ let cameraPosition=[${cameraPosition}]
     navigator.clipboard
       .writeText(codeString)
       .then(() => {
-        console.log("内容已成功复制到剪贴板");
+        // console.log("内容已成功复制到剪贴板");
+        message.success("内容已成功复制到剪贴板");
         // 可以在这里添加一些视觉反馈，比如显示一个提示消息
       })
       .catch((err) => {
-        console.error("复制失败: ", err);
+        // console.error("复制失败: ", err);
         // 可以在这里处理错误，比如显示一个错误消息
       });
   }

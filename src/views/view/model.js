@@ -14,7 +14,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 //fileURL =Your model src
 function VIewFn(wrapDom, fileURL) {
-    let state = {"autoRotate":false,"background":false,"wireframe":false,"skeleton":false,"grid":false,"screenSpacePanning":true,"pointSize":1,"bgColor":"#191919","environment":"Neutral","toneMapping":1,"playbackSpeed":1,"actionStates":{},"camera":"[default]","punctualLights":true,"exposure":0,"ambientIntensity":0.3,"ambientColor":"#FFFFFF","directIntensity":2.5132741228718345,"directColor":"#FFFFFF"}
+    let state = {"autoRotate":false,"background":false,"wireframe":false,"skeleton":false,"grid":true,"screenSpacePanning":true,"pointSize":1,"bgColor":"#191919","environment":"Neutral","toneMapping":1,"playbackSpeed":1,"actionStates":{},"camera":"[default]","punctualLights":true,"exposure":0,"ambientIntensity":0.3,"ambientColor":"#FFFFFF","directIntensity":2.5132741228718345,"directColor":"#FFFFFF"}
 
     const environments = [
 {
@@ -41,7 +41,7 @@ function VIewFn(wrapDom, fileURL) {
 },
 ];
 
-let cameraPosition=[5,2,5]
+let cameraPosition=[-1.03,0.74,-3.55]
     let modelRef = {
         current: null
     };
@@ -87,7 +87,7 @@ let cameraPosition=[5,2,5]
     const height = wrapDom.clientHeight;
 
     // 相机
-    const camera = new THREE.PerspectiveCamera(70, width / height, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
     camera.position.set(cameraPosition[0], cameraPosition[1],cameraPosition[2]);
 
     // 渲染器
@@ -155,8 +155,6 @@ let cameraPosition=[5,2,5]
                 // 初始更新材质
                 updateMaterials(carModel, state);
 
-                // 骨架更新
-                updateSkeletonHelpers(scene, modelRef.current, state.skeleton);
 
 
                //网格
@@ -206,25 +204,6 @@ function updateGridHelper(skeleton) {
   }
 }
 
-    // 新增函数用于更新骨架辅助对象
-    function updateSkeletonHelpers(scene, model, showSkeleton) {
-        // 移除现有的骨架辅助对象
-        skeletonHelpersRef.current.forEach(helper => {
-            scene.remove(helper);
-        });
-        skeletonHelpersRef.current = [];
-
-        if (showSkeleton && model) {
-            model.traverse((node) => {
-                if (node.type === 'SkinnedMesh') {
-                    const helper = new THREE.SkeletonHelper(node.skeleton.bones[0].parent);
-                    helper.material.linewidth = 3;
-                    scene.add(helper);
-                    skeletonHelpersRef.current.push(helper);
-                }
-            });
-        }
-    }
 
     //背景
 function updateBackground(bgColor) {
@@ -336,11 +315,16 @@ function updateLights() {
 
     controlsRef.current.reset();
 
-    object.position.x -= center.x;
-    object.position.y -= center.y;
-    object.position.z -= center.z;
 
-    controlsRef.current.maxDistance = size * 10;
+    controlsRef.current.maxDistance = size * 20;
+
+
+  // object.position.x -= center.x;
+  // object.position.y -= center.y;
+  // object.position.z -= center.z;
+  // camera.near = size / 100;
+  // camera.far = size * 100;
+  // camera.updateProjectionMatrix();
   }
 
         // 返回一个销毁函数

@@ -4,7 +4,7 @@ import VIewFn from './model'
 function Index() {
   useEffect(() => {
    let model= document.querySelector('.model')
-  let destroy= VIewFn(model,'/public/Lamborghini.glb')
+  let destroy= VIewFn(model,'/public/belle.glb')
 
   return ()=>{
     destroy()
